@@ -1,0 +1,64 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head></h:head>
+<body>
+
+	<ui:composition template="/WEB-INF/templates/master.xhtml">
+		<ui:define name="content">
+			<h:form id="frm">
+				<p:growl id="men" />
+
+				<p:toolbar>
+					<f:facet name="right">
+						<p:commandButton value="Guardar" icon="ui-icon-disk" 
+						action="#{vehiculoController.saveVehiculo()}" ajax="false"/>
+
+						<p:commandButton value="Regresar" icon="ui-icon-disk"
+						  action="#{vehiculoController.listVehiculo()}"
+						  immediate="true"
+						  ajax="false"/>
+					</f:facet>
+				</p:toolbar>
+
+
+				<p:panelGrid id="panGridVehiculo" columns="2" style="width:100%">
+					<p:outputLabel value="Vehiculo:" for="txtModelo" />
+					<p:inputText id="txtModelo" required="true" maxlength="45"
+						value="#{vehiculoController.vehiculo.modelo}" />
+					
+					<p:outputLabel value="Año" for="txtAño" />
+					<p:inputText id="txtAño" required="true" maxlength="45"
+						value="#{vehiculoController.vehiculo.annio}" />
+						
+					<p:outputLabel value="Tipo" for="txtTipo" />
+					<p:inputText id="txtTipo" required="true" maxlength="45"
+						value="#{vehiculoController.vehiculo.tipo}" />
+					
+						<p:outputLabel value="Usuario" for="cboUsuario" />
+					<p:selectOneMenu id="cboUsuario" required="true" effect="drop"
+						value="#{vehiculoController.usuario}"
+						converter="omnifaces.SelectItemsConverter">
+						<f:selectItem itemLabel="Seleccione una opción"
+							noSelectionOption="true" itemValue="" />
+						<f:selectItems value="#{vehiculoController.usuarios}"
+							var="usuario" itemLabel="#{usuario.nombre}"
+							itemValue="#{usuario}" />
+						
+					</p:selectOneMenu>
+					
+				</p:panelGrid>
+				<br></br>
+
+
+
+			</h:form>
+		</ui:define>
+	</ui:composition>
+
+</body>
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head></h:head>
+<body>
+
+	<ui:composition template="/WEB-INF/templates/master.xhtml">
+		<ui:define name="content">
+			<h:form id="frm">
+				<p:growl id="men" />
+
+				<p:toolbar>
+					<f:facet name="right">
+						<p:commandButton value="Nuevo" icon="ui-icon-disk"
+						  action="#{vehiculoController.newVehiculo()}"
+						  ajax="false"/>
+						
+						 <p:commandButton value="Editar" icon="ui-icon-disk"
+						  action="#{vehiculoController.editVehiculo()}"
+						  ajax="false"/>
+						
+
+					</f:facet>
+				</p:toolbar>
+
+
+				<p:panelGrid id="panGriBuscador" columns="3" style="width:100%">
+					<p:outputLabel value="Buscar Por Modelo:" for="txtSearchName" />
+					<p:inputText id="txtSearchName"  value="#{vehiculoController.filterName}" />
+					<p:commandButton icon="ui-icon-search" 
+					  actionListener="#{vehiculoController.searchVehiculosByName}"
+					  update=":frm:datTabVehiculos :frm:men"/>
+				</p:panelGrid>
+
+				<p:dataTable id="datTabVehiculos"
+					emptyMessage="No existen vehiculos registrados"
+					value="#{vehiculoController.vehiculos}" var="vehiculo"
+					
+					rowKey="#{vehiculo.vehiculo_id}"
+					selectionMode="single"
+					selection="#{vehiculoController.vehiculoSelect}"
+					
+					paginator="true" rows="10">
+					
+					
+					<p:ajax event="rowSelect"
+						listener="#{vehiculoController.selectVehiculo}" />
+					
+
+					<p:column headerText="Id">
+						<p:outputLabel value="#{vehiculo.vehiculo_id}" />
+					</p:column>
+					<p:column headerText="Modelo">
+						<p:outputLabel value="#{vehiculo.modelo}" />
+					</p:column>
+					<p:column headerText="Año">
+						<p:outputLabel value="#{vehiculo.annio}" />
+					</p:column>
+					<p:column headerText="Tipo">
+						<p:outputLabel value="#{vehiculo.tipo}" />
+					</p:column>
+					<p:column headerText="Dueño">
+						<p:outputLabel value="#{vehiculo.usuario.nombre}" />
+					</p:column>
+					
+				</p:dataTable>
+
+				
+
+
+			</h:form>
+		</ui:define>
+	</ui:composition>
+
+</body>
+</html>
